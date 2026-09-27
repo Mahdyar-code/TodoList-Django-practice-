@@ -1,0 +1,196 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskFlow | Todo Dashboard</title>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">✓</div>
+          <div>
+            <h2>TaskFlow</h2>
+            <span>Personal workspace</span>
+          </div>
+        </div>
+
+        <nav>
+          <a class="nav-item active" href="#">
+            <span>▣</span> All Tasks
+            <b id="sideAll">0</b>
+          </a>
+          <a class="nav-item" href="#">
+            <span>◷</span> Today
+            <b id="sideToday">0</b>
+          </a>
+          <a class="nav-item" href="#">
+            <span>✓</span> Completed
+            <b id="sideDone">0</b>
+          </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="tip">
+            <span>✦</span>
+            <div>
+              <strong>Stay productive</strong>
+              <p>Small progress every day.</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">MY WORKSPACE</p>
+            <h1>Good morning, <span>Mahdyar</span> 👋</h1>
+            <p class="muted">Organize your day and get things done.</p>
+          </div>
+          <div class="date-box">
+            <strong id="currentDate">Today</strong>
+            <span id="currentTime">00:00</span>
+          </div>
+        </header>
+
+        <section class="stats">
+          <div class="stat-card purple">
+            <div class="stat-icon">☰</div>
+            <div>
+              <span>Total tasks</span><strong id="totalCount">0</strong>
+            </div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-icon">◷</div>
+            <div>
+              <span>In progress</span><strong id="pendingCount">0</strong>
+            </div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon">✓</div>
+            <div>
+              <span>Completed</span><strong id="completedCount">0</strong>
+            </div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-icon">%</div>
+            <div>
+              <span>Progress</span><strong id="progressCount">0%</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-grid">
+          <div class="tasks-card">
+            <div class="section-head">
+              <div>
+                <h2>My Tasks</h2>
+                <p class="muted">Manage your daily activities</p>
+              </div>
+              <button class="primary-btn" id="openAddBtn">＋ Add Task</button>
+            </div>
+
+            <div class="toolbar">
+              <div class="search-box">
+                <span>⌕</span>
+                <input
+                  id="searchInput"
+                  type="search"
+                  placeholder="Search tasks..."
+                />
+              </div>
+              <select id="filterSelect">
+                <option value="all">All tasks</option>
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+                <option value="high">High priority</option>
+              </select>
+            </div>
+
+            <div class="task-list" id="taskList"></div>
+
+            <div class="empty-state" id="emptyState" hidden>
+              <div class="empty-icon">✓</div>
+              <h3>No tasks found</h3>
+              <p>Try another search or create a new task.</p>
+            </div>
+          </div>
+
+          <aside class="quick-card">
+            <div class="quick-title">
+              <div class="mini-icon">＋</div>
+              <div>
+                <h3>Quick Add</h3>
+                <p class="muted">Create a new task</p>
+              </div>
+            </div>
+
+            <form id="taskForm">
+              <input type="hidden" id="editId" />
+
+              <label>Task title</label>
+              <input
+                id="titleInput"
+                type="text"
+                placeholder="e.g. Learn Django Forms"
+                required
+              />
+
+              <label>Description</label>
+              <textarea
+                id="descriptionInput"
+                placeholder="Add a short description..."
+              ></textarea>
+
+              <div class="form-row">
+                <div>
+                  <label>Priority</label>
+                  <select id="priorityInput">
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Due date</label>
+                  <input id="dateInput" type="date" />
+                </div>
+              </div>
+
+              <button class="submit-btn" id="submitBtn" type="submit">
+                Create Task
+              </button>
+              <button class="cancel-btn" id="cancelBtn" type="button">
+                Cancel editing
+              </button>
+            </form>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      function updateClock() {
+  const now = new Date();
+  document.getElementById("currentDate").textContent = now.toLocaleDateString(
+    "en-US",
+    { weekday: "long", month: "short", day: "numeric" },
+  );
+  document.getElementById("currentTime").textContent = now.toLocaleTimeString(
+    "en-US",
+    { hour: "2-digit", minute: "2-digit" },
+  );
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+render();
+    </script>
+  </body>
+</html>
