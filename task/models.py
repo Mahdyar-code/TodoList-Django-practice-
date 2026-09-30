@@ -22,7 +22,7 @@ class Task(models.Model):
     in_progress = 2
     status_choices = (
         (in_progress, 'In progress'),
-        (complete, 'Completed')
+        (completed, 'Completed')
     )
     state = models.IntegerField(choices=status_choices, default=in_progress)
 

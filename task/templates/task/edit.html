@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}" />
+</head>
+<body style="display: flex; justify-content: center; align-items: center; height:100%; width: 100%">
+    <aside class="quick-card" style="max-width: 500px; width: 100%;">
+          <form id="taskForm" method="POST" action="">
+                {% csrf_token %}
+              <input type="hidden" id="editId" />
+              <label>Task title</label>
+              {{ form.title }}
+
+              <label>Description</label>
+                {{form.description}}
+
+              <div class="form-row">
+                <div>
+                  <label>Priority</label>
+                    {{ form.priority }}
+                </div>
+                <div>
+                  <label>Due date</label>
+                  {{ form.due_date }}
+                </div>
+              </div>
+              <button class="submit-btn" id="cancelBtn" type="submit">
+                save editing
+              </button>
+            </form>
+    </aside>
+
+</body>
+</html>

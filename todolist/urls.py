@@ -1,9 +1,9 @@
-from xml.etree.ElementInclude import include
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from task import views
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('task/',views.indexView,name='index'),
+    path('', include('task.urls')),
+    
+    # path('',views.indexView,name='index'),
 ]
