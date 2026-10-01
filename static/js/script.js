@@ -15,7 +15,7 @@ search_input.addEventListener("input", function () {
 function updateClock() {
   const now = new Date();
   document.getElementById("currentDate").textContent = now.toLocaleDateString(
-    "en-US",
+    "en-AF",
     {
       weekday: "long",
       month: "short",
@@ -23,7 +23,7 @@ function updateClock() {
     },
   );
   document.getElementById("currentTime").textContent = now.toLocaleTimeString(
-    "en-US",
+    "en-AF",
     {
       hour: "2-digit",
       minute: "2-digit",
