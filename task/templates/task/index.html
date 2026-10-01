@@ -68,19 +68,22 @@
           <div class="stat-card blue">
             <div class="stat-icon">◷</div>
             <div>
-              <span>In progress</span><strong id="pendingCount">{{ in_progress.count }}</strong>
+              <span>In progress</span
+              ><strong id="pendingCount">{{ in_progress.count }}</strong>
             </div>
           </div>
           <div class="stat-card green">
             <div class="stat-icon">✓</div>
             <div>
-              <span>Completed</span><strong id="completedCount">{{ completed.count }}</strong>
+              <span>Completed</span
+              ><strong id="completedCount">{{ completed.count }}</strong>
             </div>
           </div>
           <div class="stat-card orange">
             <div class="stat-icon">%</div>
             <div>
-              <span>Progress</span><strong id="progressCount">{{ progress }}%</strong>
+              <span>Progress</span
+              ><strong id="progressCount">{{ progress }}%</strong>
             </div>
           </div>
         </section>
@@ -92,78 +95,57 @@
                 <h2>My Tasks</h2>
                 <p class="muted">Manage your daily activities</p>
               </div>
-{#                <a href="#taskForm"><button class="primary-btn" id="openAddBtn">＋ Add Task</button></a>#}
             </div>
 
             <div class="toolbar">
-              <div class="search-box">
+              <form method="POST" action="" class="search-box">
                 <span>⌕</span>
                 <input
                   id="searchInput"
                   type="search"
                   placeholder="Search tasks..."
                 />
-              </div>
-              <select id="filterSelect">
-                <option value="all">All tasks</option>
-                <option value="pending">Pending</option>
-                <option value="completed">Completed</option>
-                <option value="high">High priority</option>
-              </select>
+              </form>
+             
             </div>
 
             <div class="task-list" id="taskList">
-             {% for task in tasks %}
-                  <article class="task {% if task.state == 1%} completed {% endif %} ">
-
-                  <a href="/toggle/{{ task.id }}">
-                      <button
-                 class="check {% if task.state == 1%} done {% endif %}"
-                  aria-label="Complete task">
-
-                </button>
-                  </a>
+              {% for task in tasks %}
+              <article
+                class="task {% if task.state == 1%} completed {% endif %}"
+              >
+                <a href="/toggle/{{ task.id }}">
+                  <button
+                    class="check {% if task.state == 1%} done {% endif %}"
+                    aria-label="Complete task"
+                  ></button>
+                </a>
                 <div class="task-info">
-                  <div class="task-title">{{ task.title}}</div>
-                  <div class="task-desc">
-                      {{ task.description}}
-                  </div>
+                  <div class="task-title task-ha">{{ task.title}}</div>
+                  <div class="task-desc">{{ task.description}}</div>
                   <div class="meta">
-                    <span class="badge {% if task.priority == 1 %} high
-                                       {% elif task.priority == 2 %} medium
-                                       {% elif task.priority == 3 %} low
-                                       {% endif %}  ">{{ task.get_priority_display }}</span>
-                    <div class="due_date"> <label>final date:</label> {{ task.due_date }}</div>
+                    <span
+                      class="badge {% if task.priority == 1 %} high {% elif task.priority == 2 %} medium {% elif task.priority == 3 %} low {% endif %}"
+                      >{{ task.get_priority_display }}</span
+                    >
+                    <div class="due_date">
+                      <label>final date:</label> {{ task.due_date }}
+                    </div>
                   </div>
                 </div>
 
                 <div class="actions">
-                      <a href="/edit/{{ task.id }}" >
-                          <button class="action"  title="Edit" type="submit">
-                              ✎
-                          </button>
-                      </a>
-                    <a href="/delete/{{ task.id }}">
-                         <button
-                    class="action delete"
-                    title="Delete"
-                  >
-                    ×
-                  </button>
-                    </a>
+                  <a href="/edit/{{ task.id }}">
+                    <button class="action" title="Edit" type="submit">✎</button>
+                  </a>
+                  <a href="/delete/{{ task.id }}">
+                    <button class="action delete" title="Delete">×</button>
+                  </a>
                 </div>
               </article>
-             {% endfor %}
-
-            </div>
-
-            <div class="empty-state" id="emptyState" hidden>
-              <div class="empty-icon">✓</div>
-              <h3>No tasks found</h3>
-              <p>Try another search or create a new task.</p>
+              {% endfor %}
             </div>
           </div>
-
           <aside class="quick-card">
             <div class="quick-title">
               <div class="mini-icon">＋</div>
@@ -174,19 +156,19 @@
             </div>
 
             <form id="taskForm" action="" method="POST">
-                {% csrf_token %}
+              {% csrf_token %}
               <input type="hidden" id="editId" />
 
               <label>Task title</label>
               {{ input_form.title }}
 
               <label>Description</label>
-                {{input_form.description}}
+              {{input_form.description}}
 
               <div class="form-row">
                 <div>
                   <label>Priority</label>
-                    {{ input_form.priority }}
+                  {{ input_form.priority }}
                 </div>
                 <div>
                   <label>Due date</label>
@@ -197,9 +179,6 @@
               <button class="submit-btn" id="submitBtn" type="submit">
                 Create Task
               </button>
-{#              <button class="cancel-btn" id="cancelBtn" type="button">#}
-{#                Cancel editing#}
-{#              </button>#}
             </form>
           </aside>
         </section>
@@ -208,25 +187,6 @@
 
     <div class="toast" id="toast"></div>
 
-    <script>
-      function updateClock() {
-        const now = new Date();
-        document.getElementById("currentDate").textContent =
-          now.toLocaleDateString("en-US", {
-            weekday: "long",
-            month: "short",
-            day: "numeric",
-          });
-        document.getElementById("currentTime").textContent =
-          now.toLocaleTimeString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-          });
-      }
-
-      updateClock();
-      setInterval(updateClock, 1000);
-
-    </script>
+  <script src="{% static "js/script.js" %}"></script>
   </body>
 </html>

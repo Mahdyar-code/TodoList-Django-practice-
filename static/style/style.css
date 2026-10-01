@@ -575,3 +575,6 @@ textarea {
     grid-template-columns: 1fr;
   }
 }
+.hidde_search{
+  display: none;
+}
